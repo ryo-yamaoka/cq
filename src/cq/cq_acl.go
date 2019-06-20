@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	RootCmd.AddCommand(aclCmd)
+	rootCmd.AddCommand(aclCmd)
 
 	aclCmd.AddCommand(aclAddCmd)
 	aclAddCmd.Flags().StringVarP(&commons.Flags.GroupId, "group-id", "", "", "security group-id")

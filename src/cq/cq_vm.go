@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	RootCmd.AddCommand(vmCmd)
+	rootCmd.AddCommand(vmCmd)
 
 	vmCmd.AddCommand(vmListCmd)
 	vmListCmd.Flags().StringVarP(&commons.Flags.Delimiter, "delimiter", "d", "\t", "delimiter")

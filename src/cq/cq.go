@@ -4,47 +4,45 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ap-communications/cq/src/cq/commons"
-
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
-var cfgFile string
+var (
+	version     = "-1.-1.-1" // It will be set by -ldflags (look at Makefile)
+	versionFlag bool         // --version -v
+)
 
-var RootCmd = &cobra.Command{
+var rootCmd = &cobra.Command{
 	Use:   "cq",
 	Short: "cq is a tool for simple and fast control cloud environment.",
 	Long:  "cq is a tool for simple and fast control cloud environment.\nhttps://github.com/ap-communications/cq",
 	Run: func(cmd *cobra.Command, args []string) {
-		if commons.Flags.VersionFlag {
-			printVersion()
-		}
+		printVersion()
 	},
 }
 
-func Execute() {
-	if err := RootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(-1)
-	}
-}
-
 func init() {
-	cobra.OnInitialize(initConfig)
-	RootCmd.Flags().BoolVarP(&commons.Flags.VersionFlag, "version", "v", false, "Show cq version")
+	rootCmd.Flags().BoolVarP(&versionFlag, "version", "v", false, "Show cq version")
+	rootCmd.AddCommand(versionCmd)
 }
 
-func initConfig() {
-	if cfgFile != "" {
-		viper.SetConfigFile(cfgFile)
+// Execute is root of cq
+func Execute() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
 	}
+}
 
-	viper.SetConfigName(".cq")
-	viper.AddConfigPath("$HOME")
-	viper.AutomaticEnv()
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "Show cq version",
+	Long:  "Show cq version",
+	Run: func(cmd *cobra.Command, args []string) {
+		printVersion()
+	},
+}
 
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
-	}
+func printVersion() {
+	fmt.Printf("Cloud Query (cq) version %s\n", version)
 }

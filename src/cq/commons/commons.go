@@ -2,6 +2,7 @@ package commons
 
 import (
 	"fmt"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
@@ -9,25 +10,23 @@ import (
 
 const (
 	DEFAULT_REGION = "ap-northeast-1"
-	VERSION        = "1.1.1"
 )
 
 var Flags struct {
-	VersionFlag bool   // --version -v
-	Delimiter   string // --delimiter -d
-	ImageId     string // --imageid
-	Region      string // --region
-	Type        string // --type
-	Keyname     string // --key
-	Force       bool   // --force -f
-	GroupId     string // --group-id
-	Address     string // --address
-	Protocol    string // --protocol
-	Port        string // --port
-	Way         string // --way
-	NoFailover  bool   // --no-failover
-	SnapshotId  string // --snapshot-id
-	FilePath    string // --file
+	Delimiter  string // --delimiter -d
+	ImageId    string // --imageid
+	Region     string // --region
+	Type       string // --type
+	Keyname    string // --key
+	Force      bool   // --force -f
+	GroupId    string // --group-id
+	Address    string // --address
+	Protocol   string // --protocol
+	Port       string // --port
+	Way        string // --way
+	NoFailover bool   // --no-failover
+	SnapshotId string // --snapshot-id
+	FilePath   string // --file
 }
 
 type InstanceList struct {
